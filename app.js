@@ -1,26 +1,24 @@
-// Express.jsモジュールをインポート
 const express = require('express');
-const app = express(); // Expressアプリケーションのインスタンスを作成
-const port = process.env.PORT || 3000; // サーバーがリッスンするポート番号。Renderなどの環境ではprocess.env.PORTが使われる
+const app = express();
+const port = process.env.PORT || 3000;
 
-// ルートURL (例: http://localhost:3000/) にアクセスがあった場合
 app.get('/', (req, res) => {
+  console.log('トップページにアクセスがありました。'); // アクセスログを追加
   res.send('トップページです。');
 });
 
-// 動的なURL (例: http://localhost:3000/search?keyword=apple) にアクセスがあった場合
 app.get('/search', (req, res) => {
-  // request.query オブジェクトから 'keyword' という名前のクエリパラメータの値を取得
   const keyword = req.query.keyword;
 
   if (keyword) {
+    console.log(`[アクセスログ] 検索キーワード: "${keyword}" でアクセスがありました。`); // ここにログ出力ロジックを追加
     res.send(`検索キーワードは: ${keyword} です。`);
   } else {
+    console.log('[アクセスログ] キーワードなしで /search にアクセスがありました。'); // キーワードがない場合のログ
     res.send('キーワードが指定されていません。');
   }
 });
 
-// サーバーを起動し、指定されたポートでリッスン
 app.listen(port, () => {
   console.log(`サーバーが http://localhost:${port} で起動しました。`);
   console.log('Ctrl+Cで終了します。');
